@@ -1,6 +1,6 @@
 # Sistema Bancário
 
-Este é um simples sistema bancário, implementado em Python, onde o usuário pode realizar saques e depósitos em uma conta bancária simulada. O sistema conta com um limite diário de saques e um histórico de transações.
+Este é um simples sistema bancário, desenvolvido em Python, onde o usuário pode realizar saques e depósitos em uma conta bancária simulada. O sistema conta com um limite diário de saques e um histórico de transações.
 
 ## Funcionalidades
 
