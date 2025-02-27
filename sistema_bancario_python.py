@@ -17,7 +17,7 @@ Saldo : {SALDO_CONTA:0.2f}
 Saques restantes: {quantidade_saques}
                                   
 [S] Saque                         |
-[D] Deposito                      |
+[D] Depósito                      |
 [E] Extrato                       |
 [F] Finalizar                     |
 -------------------------------
