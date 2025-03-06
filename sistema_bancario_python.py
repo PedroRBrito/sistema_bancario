@@ -1,21 +1,24 @@
 
-import datetime
+from datetime import datetime
 
 SALDO_CONTA = 1000
 saque = 0
 deposito = 0
 extrato = []
 quantidade_saques = 3
-ultimo_saque = None
+quantidade_transacoes = 10
+data_transacao = datetime.now()
+
 
 
 while True:
 
     menu = f"""
--------------Menu--------------
+----------Informações----------
 Saldo : {SALDO_CONTA:0.2f}
 Saques restantes: {quantidade_saques}
-                                  
+Transações Restantes: {quantidade_transacoes}
+-------------Menu--------------                                  
 [S] Saque                         |
 [D] Depósito                      |
 [E] Extrato                       |
@@ -26,56 +29,83 @@ Saques restantes: {quantidade_saques}
     
     opcao = input(menu)
 
-    if ultimo_saque and ultimo_saque.date() != datetime.datetime.now().date():
-        quantidade_saques = 3
+    if data_transacao.day < datetime.now().day:
+        if quantidade_saques <= 0 or quantidade_transacoes <= 0:
+            quantidade_saques = 3
+            quantidade_transacoes = 10
+            data_transacao = datetime.now()
 
     if opcao in ("s", "S"):
         
-        if quantidade_saques <= 0:
-            if ultimo_saque:
-                tempo_passado = datetime.datetime.now() - ultimo_saque
-                if tempo_passado.days == 0:
-                    horas_restantes = 24 - tempo_passado.seconds // 3600
-                    print(f"Limite diário de saques atingido. Tente novamente em {horas_restantes} horas.")
-                    continue
-                
-                    
-        saque = float(input("Digite o valor do saque: "))
+        if quantidade_transacoes <= 0:
+            print("Limite de transações atingido, tente novamente amanhã!")
+            continue
 
-        if saque > SALDO_CONTA:
-            print("Saldo insuficiente!")
-
-        elif saque > 500:
-            print("Limite de R$500 por saque!")
-
-        elif saque < 0:
-            print("Por favor, coloque valores positivos")
+        elif quantidade_saques <= 0:
+            print("Limite de saques atingido, tente novamente amanhã!")
+            continue
         
-        else:
-            SALDO_CONTA -= saque
-            quantidade_saques -= 1
-            ultimo_saque = datetime.datetime.now()
+        saque = input("Digite o valor do saque: ")
+        
+        try:
+            saque = float(saque)
 
-            extrato.append(f"Saque: R${saque:0.2f}")
+            if saque > SALDO_CONTA:
+                print("Saldo insuficiente!")
+                continue
 
-            print(f"Voce acaba de sacar: R${saque:0.2f}")
-            print(f"Seu saldo atual é: R${SALDO_CONTA:0.2F}")
+            elif saque > 500:
+                print("Limite de R$500 por saque!")
+                continue
+
+            elif saque < 0:
+                print("Por favor, coloque valores válidos!")
+                continue
+
+            else:
+                SALDO_CONTA -= saque
+                quantidade_saques -= 1
+                quantidade_transacoes -=1
+                data_transacao = datetime.now()
+
+                extrato.append(f"Saque: R${saque:0.2f}......Data:{data_transacao.strftime('%d/%m/%Y %H:%M')}")
+
+                print(f"Voce acaba de sacar: R${saque:0.2f}")
+                print(f"Seu saldo atual é: R${SALDO_CONTA:0.2f}")
+
+        except ValueError:
+            print("Por favor, digite um número válido!")
+        
+        if quantidade_transacoes == 0:
+            quantidade_saques = 0
         
 
     elif opcao in ("d", "D"):
 
-        deposito = float(input("Digite o valor do deposito: "))
+        try:
+            if quantidade_transacoes <= 0:
+                print("Limite de transações atingido, tente novamente amanhã!")
+                continue
 
-        if deposito < 0:
-            print("Por favor, coloque valores positivos")
+            deposito = float(input("Digite o valor do deposito: "))
 
-        else:
-            SALDO_CONTA += deposito
+            if deposito < 0:
+                print("Por favor, coloque valores válidos!")
 
-            extrato.append(f"Deposito: R${deposito:0.2f}")
+            else:
+                SALDO_CONTA += deposito
+                quantidade_transacoes -=1
 
-            print(f"Você acaba de depositar: R${deposito:0.2f}")
-            print(f"Seu saldo atual é: R${SALDO_CONTA:0.2F}")
+                data_transacao = datetime.now()
+                extrato.append(f"Deposito: R${deposito:0.2f}......Data:{data_transacao.strftime('%d/%m/%Y %H:%M')}")
+
+                print(f"Você acaba de depositar: R${deposito:0.2f}")
+                print(f"Seu saldo atual é: R${SALDO_CONTA:0.2F}")
+        except ValueError:
+            print("Por favor, digite um número válido!")
+
+        if quantidade_transacoes == 0:
+            quantidade_saques = 0
 
         
 
@@ -91,4 +121,4 @@ Saques restantes: {quantidade_saques}
         break
 
     else:
-        print("operação invalida")
+        print("Operação inválida!")
