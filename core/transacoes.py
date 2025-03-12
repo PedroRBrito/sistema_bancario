@@ -63,7 +63,7 @@ def deposito(banco_usuario, cpf_login):
             print("Limite de transações atingido, tente novamente amanhã!")
             return banco_usuario, cpf_login
 
-        valor_deposito = float(input("Digite o valor do deposito: "))
+        valor_deposito = float(input("Digite o valor do deposito: ")).strip()
 
         if valor_deposito < 0:
             print("Por favor, coloque valores válidos!")

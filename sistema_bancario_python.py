@@ -1,6 +1,6 @@
 
 from datetime import datetime
-from interface.menu import menu, login, encerrar
+from interface.menu import menu_conta, login, encerrar, menu_inicial, listar_contas
 from core.transacoes import saque, deposito
 from core.conta import cadastro_usuario, cadastro_conta
 from repository.extrato import extrato
@@ -14,6 +14,7 @@ banco_usuario= {
         'Nome': 'Carlos Silva',
         'CPF': '12345678900',
         'Conta': {
+            'Agência': '0001',
             'Número da conta': 1,
             'Saldo': 0,
             'Extrato': [],
@@ -28,6 +29,7 @@ banco_usuario= {
         'Nome': 'Ana Oliveira',
         'CPF': '98765432100',
         'Conta': {
+            'Agência': '0001',
             'Número da conta': 2,
             'Saldo': 0,
             'Extrato': [],
@@ -42,6 +44,7 @@ banco_usuario= {
         'Nome': 'Luís Costa',
         'CPF': '11122334455',
         'Conta': {
+            'Agência': '0001',
             'Número da conta': 3,
             'Saldo': 0,
             'Extrato': [],
@@ -56,13 +59,24 @@ banco_usuario= {
 
 while True:
 
-    cpf_login = login()
+    menu_saudacoes = menu_inicial()
+
+    if menu_saudacoes in ("L", "l"):
+        cpf_login = login()
+    elif menu_saudacoes in ("C", "c"):
+        listar_contas(banco_usuario)
+        continue
+    elif menu_saudacoes in ("s", "S"):
+        break
+    else:
+        print("Opção inválida!")
+        continue
 
     if cpf_login in banco_usuario:
             
             while True:
 
-                opcao = menu(banco_usuario, cpf_login)
+                opcao = menu_conta(banco_usuario, cpf_login)
 
                 banco_usuario, cpf_login = data_transacao(banco_usuario, cpf_login)
 
@@ -95,5 +109,7 @@ while True:
 
     if sair == ("t" or "T"):
         continue
-    else:
+    elif sair == ("s" or "S"):
         break
+    else:
+        print("Opção inválida!")

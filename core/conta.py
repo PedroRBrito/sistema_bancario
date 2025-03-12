@@ -1,16 +1,17 @@
 from datetime import datetime
 
 banco_usuario = {}
+AGENCIA = '0001'
 
 def cadastro_usuario(banco_usuario):
 
-    nome = input("Informe seu nome: ")
-    data_nascimento = input("Informe sua data de nascimento: ")
-    cpf = input("Informe seu CPF: ")
-    logradouro = input("Informe seu logradouro: ")
-    numero = input("Informe o numero da sua casa: ")
-    bairro = input("Informe seu bairro: ")
-    cidade_estado = input("Informe a sua cidade e a sigla de seu estado: (exemplo:Brasília/DF)")
+    nome = input("Informe seu nome: ").strip()
+    data_nascimento = input("Informe sua data de nascimento: ").strip()
+    cpf = input("Informe seu CPF: ").strip()
+    logradouro = input("Informe seu logradouro: ").strip()
+    numero = input("Informe o numero da sua casa: ").strip()
+    bairro = input("Informe seu bairro: ").strip()
+    cidade_estado = input("Informe a sua cidade e a sigla de seu estado (exemplo:Brasília/DF): ").strip()
 
     banco_usuario[cpf] = {"Nome" : nome, "CPF" : cpf, "Conta" : {}, "Data de nascimento" : data_nascimento, "Endereço" : [logradouro, numero, bairro, cidade_estado]}
 
@@ -20,11 +21,12 @@ def cadastro_usuario(banco_usuario):
 
 def cadastro_conta(banco_usuario, numero_conta):
 
-    cpf_conta = input("Informe um cpf para vincular sua conta: ")
+    cpf_conta = input("Informe um cpf para vincular sua conta: ").strip()
 
     if cpf_conta in banco_usuario:
 
         banco_usuario[cpf_conta]["Conta"]= {
+            "Agência" : AGENCIA,
             "Número da conta" : numero_conta,
             "Saldo" : 0,
             "Extrato" : [],
