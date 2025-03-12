@@ -1,35 +1,46 @@
-# Sistema Bancário Python
+# Sistema Bancário
 
-Este projeto implementa um **sistema bancário simples** utilizando Python. Ele permite o cadastro de usuários, criação de contas bancárias, realização de transações como **saques** e **depósitos**, além de possibilitar a consulta de **extratos** e **dados pessoais**.
+Esse é um projeto de um **sistema bancário** simples, implementado em Python, com funcionalidades como cadastro de usuários, login, saque, depósito, extrato de conta e gerenciamento de transações.
 
 ## Funcionalidades
 
-- **Cadastro de Usuário**: O sistema permite que o usuário se cadastre informando dados pessoais como nome, CPF, data de nascimento, e endereço.
-  
-- **Cadastro de Conta Bancária**: Após o cadastro do usuário, é possível criar uma conta bancária associada a um CPF com número de conta, saldo inicial, e limite de transações.
+- **Login de usuário**: O sistema permite que o usuário faça login usando seu CPF.
+- **Cadastro de novo usuário e conta**: Caso o CPF não exista, o sistema permite o cadastro de um novo usuário e sua conta bancária.
+- **Saque**: O usuário pode realizar saques na sua conta, conforme as regras de transações.
+- **Depósito**: O usuário pode realizar depósitos na sua conta.
+- **Extrato**: O usuário pode verificar seu extrato bancário.
+- **Lista de contas**: O sistema permite listar todas as contas cadastradas.
+- **Encerramento**: O sistema pode ser encerrado a qualquer momento.
 
-- **Operações Bancárias**:
-  - **Saques**: O usuário pode realizar saques de sua conta, com limite de tentativas.
-  - **Depósitos**: O sistema permite que o usuário deposite valores na conta.
-  - **Extrato**: O usuário pode consultar o extrato de suas transações realizadas.
+## Estrutura do projeto
 
-- **Controle de Transações**: Limites de saques e transações, além do registro da data e hora de cada transação.
+- **`core/`**: Contém as funcionalidades principais como transações, conta e regras bancárias.
+- **`repository/`**: Contém funcionalidades de extrato.
+- **`interface/`**: Contém o menu e interações com o usuário.
+- **`services/`**: Contém a lógica de regras bancárias.
+- **`sistema_bancario.py`**: Arquivo principal que executa o sistema.
 
-## Tecnologias Utilizadas
+## Como usar
 
-- Python 3
-- Biblioteca `datetime` para registro de transações
+1. Clone o repositório:
+    ```bash
+    git clone https://github.com/seuusuario/sistema-bancario.git
+    ```
 
-## Como Usar
+2. Navegue até o diretório do projeto:
+    ```bash
+    cd sistema-bancario
+    ```
 
-1. Clone este repositório.
-2. Execute o script `sistema_bancario_python.py` para iniciar o sistema.
-3. Siga as instruções no terminal para cadastrar usuários, contas e realizar transações.
+3. Execute o script principal:
+    ```bash
+    python sistema_bancario.py
+    ```
 
-## Exemplo de Cadastro
+4. Siga as instruções do menu interativo para realizar operações bancárias.
 
-O sistema solicita as seguintes informações para o cadastro do usuário:
-- Nome
-- Data de Nascimento
-- CPF
-- Endereço (logradouro, número, bairro, cidade/estado)
+
+## Tecnologias usadas
+
+- **Python 3.x**: Linguagem de programação utilizada.
+- **Datetime**: Para manipulação de datas e registros de transações.
