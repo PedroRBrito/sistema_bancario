@@ -1,53 +1,35 @@
-# Sistema Bancário
+# Sistema Bancário Python
 
-Este é um simples sistema bancário, desenvolvido em Python, onde o usuário pode realizar saques e depósitos em uma conta bancária simulada. O sistema conta com um limite diário de saques, de transações e extrato com data das operações realizadas.
-
-![Texto alternativo da imagem](https://raw.githubusercontent.com/PedroRBrito/sistema_bancario/main/assets/menu.png) ![Texto alternativo da imagem](https://raw.githubusercontent.com/PedroRBrito/sistema_bancario/main/assets/menu_atualizado.png)
+Este projeto implementa um **sistema bancário simples** utilizando Python. Ele permite o cadastro de usuários, criação de contas bancárias, realização de transações como **saques** e **depósitos**, além de possibilitar a consulta de **extratos** e **dados pessoais**.
 
 ## Funcionalidades
 
-- **Saque**: O usuário pode realizar saques de até R$500 por vez, com um limite de 3 saques diários. Caso o limite de saques ou transações seja atingido, o usuário é informado a tentar o saque no dia seguinte.
+- **Cadastro de Usuário**: O sistema permite que o usuário se cadastre informando dados pessoais como nome, CPF, data de nascimento, e endereço.
   
-  ![Texto alternativo da imagem](https://raw.githubusercontent.com/PedroRBrito/sistema_bancario/main/assets/resposta_saque.png)
+- **Cadastro de Conta Bancária**: Após o cadastro do usuário, é possível criar uma conta bancária associada a um CPF com número de conta, saldo inicial, e limite de transações.
 
-- **Depósito**: O usuário pode depositar valores na conta, e o saldo será atualizado. Caso o limite de transações seja atingido, o usuário também será informado.
+- **Operações Bancárias**:
+  - **Saques**: O usuário pode realizar saques de sua conta, com limite de tentativas.
+  - **Depósitos**: O sistema permite que o usuário deposite valores na conta.
+  - **Extrato**: O usuário pode consultar o extrato de suas transações realizadas.
 
-  ![Texto alternativo da imagem](https://raw.githubusercontent.com/PedroRBrito/sistema_bancario/main/assets/resposta_deposito.png)
+- **Controle de Transações**: Limites de saques e transações, além do registro da data e hora de cada transação.
 
-  
-- **Extrato**: O usuário pode visualizar o histórico de saques e depósitos com sua respectiva data e hora.
+## Tecnologias Utilizadas
 
-  ![Texto alternativo da imagem](https://raw.githubusercontent.com/PedroRBrito/sistema_bancario/main/assets/resposta_extrato.png)
+- Python 3
+- Biblioteca `datetime` para registro de transações
 
-- **Verificações**: O usuário será informado do limite de valor do saque, limite de quantidade de saques e limite de transações diárias.
+## Como Usar
 
-  ![Texto alternativo da imagem](https://raw.githubusercontent.com/PedroRBrito/sistema_bancario/main/assets/verificacao_limite_valor_saque.png) ![Texto alternativo da imagem](https://raw.githubusercontent.com/PedroRBrito/sistema_bancario/main/assets//verificacao_limite_diario_saque.png) ![Texto alternativo da imagem](https://raw.githubusercontent.com/PedroRBrito/sistema_bancario/main/assets//verificacao_limite_transacao.png)
-  
-- **Finalizar**: O usuário pode sair do sistema a qualquer momento.
+1. Clone este repositório.
+2. Execute o script `sistema_bancario_python.py` para iniciar o sistema.
+3. Siga as instruções no terminal para cadastrar usuários, contas e realizar transações.
 
-## Instruções de uso
+## Exemplo de Cadastro
 
-O sistema começa com um saldo inicial de R$1000, permitindo até 3 saques e 10 transações por dia.
-O menu oferece as seguintes opções:
-
-- **S**: Realizar um saque
-- **D**: Realizar um depósito
-- **E**: Consultar o extrato
-- **F**: Finalizar a sessão
-
-Ao escolher a opção de saque ou depósito, o sistema valida o valor inserido:
-
-- Se for um valor não numérico ou negativo, o sistema pedirá um valor válido.
-- Se o valor ultrapassar o limite de R$500 para saques ou for maior que o saldo disponível, o sistema informará o erro.
-
-O extrato de transações é atualizado a cada saque ou depósito e exibido na opção **E**. Ao final de cada dia, os limites de saques e transações são resetados.
-
-## Requisitos
-
-- Python 3.x
-
-## Como Rodar o Projeto
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/PedroRBrito/sistema_bancario.git
+O sistema solicita as seguintes informações para o cadastro do usuário:
+- Nome
+- Data de Nascimento
+- CPF
+- Endereço (logradouro, número, bairro, cidade/estado)

@@ -1,124 +1,99 @@
 
 from datetime import datetime
-
-SALDO_CONTA = 1000
-saque = 0
-deposito = 0
-extrato = []
-quantidade_saques = 3
-quantidade_transacoes = 10
-data_transacao = datetime.now()
+from interface.menu import menu, login, encerrar
+from core.transacoes import saque, deposito
+from core.conta import cadastro_usuario, cadastro_conta
+from repository.extrato import extrato
+from services.regras_bancarias import data_transacao
 
 
+
+numero_conta = 4
+banco_usuario= {
+    '12345678900': {
+        'Nome': 'Carlos Silva',
+        'CPF': '12345678900',
+        'Conta': {
+            'Número da conta': 1,
+            'Saldo': 0,
+            'Extrato': [],
+            'Quantidade de saques': 3,
+            'Quantidade de transações': 10,
+            'Registro da data da transação': datetime(2025, 3, 12, 2, 29, 38, 464703)
+            },
+        'Data de nascimento': '01/01/1985',
+        'Endereço': ['Rua A', '10', 'Centro', 'Brasília/DF']
+    },
+    '98765432100': {
+        'Nome': 'Ana Oliveira',
+        'CPF': '98765432100',
+        'Conta': {
+            'Número da conta': 2,
+            'Saldo': 0,
+            'Extrato': [],
+            'Quantidade de saques': 3,
+            'Quantidade de transações': 10,
+            'Registro da data da transação': datetime(2025, 3, 12, 2, 29, 38, 464774)
+            },
+        'Data de nascimento': '15/06/1992',
+        'Endereço': ['Rua B', '20', 'Sul', 'São Paulo/SP']
+    },
+    '11122334455': {
+        'Nome': 'Luís Costa',
+        'CPF': '11122334455',
+        'Conta': {
+            'Número da conta': 3,
+            'Saldo': 0,
+            'Extrato': [],
+            'Quantidade de saques': 3,
+            'Quantidade de transações': 10,
+            'Registro da data da transação': datetime(2025, 3, 12, 2, 29, 38, 464838)
+        },
+        'Data de nascimento': '10/03/1978',
+        'Endereço': ['Rua C', '30', 'Norte', 'Rio de Janeiro/RJ']
+    }
+}
 
 while True:
 
-    menu = f"""
-----------Informações----------
-Saldo : {SALDO_CONTA:0.2f}
-Saques restantes: {quantidade_saques}
-Transações Restantes: {quantidade_transacoes}
--------------Menu--------------                                  
-[S] Saque                         |
-[D] Depósito                      |
-[E] Extrato                       |
-[F] Finalizar                     |
--------------------------------
+    cpf_login = login()
 
-"""
-    
-    opcao = input(menu)
+    if cpf_login in banco_usuario:
+            
+            while True:
 
-    if data_transacao.day < datetime.now().day:
-        if quantidade_saques <= 0 or quantidade_transacoes <= 0:
-            quantidade_saques = 3
-            quantidade_transacoes = 10
-            data_transacao = datetime.now()
+                opcao = menu(banco_usuario, cpf_login)
 
-    if opcao in ("s", "S"):
-        
-        if quantidade_transacoes <= 0:
-            print("Limite de transações atingido, tente novamente amanhã!")
-            continue
+                banco_usuario, cpf_login = data_transacao(banco_usuario, cpf_login)
 
-        elif quantidade_saques <= 0:
-            print("Limite de saques atingido, tente novamente amanhã!")
-            continue
-        
-        saque = input("Digite o valor do saque: ")
-        
-        try:
-            saque = float(saque)
+                if opcao in ("s", "S"):
+                    banco_usuario, cpf_login = saque(banco_usuario, cpf_login)
+                    print(banco_usuario)
 
-            if saque > SALDO_CONTA:
-                print("Saldo insuficiente!")
-                continue
+                elif opcao in ("d", "D"):
+                    banco_usuario, cpf_login  = deposito(banco_usuario, cpf_login)
+                    print(banco_usuario)
 
-            elif saque > 500:
-                print("Limite de R$500 por saque!")
-                continue
+                elif opcao in ("e", "E"):
+                    extrato(banco_usuario, cpf_login)
+                    print(banco_usuario)
 
-            elif saque < 0:
-                print("Por favor, coloque valores válidos!")
-                continue
+                elif opcao in ("t", "T"):
+                    break
 
-            else:
-                SALDO_CONTA -= saque
-                quantidade_saques -= 1
-                quantidade_transacoes -=1
-                data_transacao = datetime.now()
-
-                extrato.append(f"Saque: R${saque:0.2f}......Data:{data_transacao.strftime('%d/%m/%Y %H:%M')}")
-
-                print(f"Voce acaba de sacar: R${saque:0.2f}")
-                print(f"Seu saldo atual é: R${SALDO_CONTA:0.2f}")
-
-        except ValueError:
-            print("Por favor, digite um número válido!")
-        
-        if quantidade_transacoes == 0:
-            quantidade_saques = 0
-        
-
-    elif opcao in ("d", "D"):
-
-        try:
-            if quantidade_transacoes <= 0:
-                print("Limite de transações atingido, tente novamente amanhã!")
-                continue
-
-            deposito = float(input("Digite o valor do deposito: "))
-
-            if deposito < 0:
-                print("Por favor, coloque valores válidos!")
-
-            else:
-                SALDO_CONTA += deposito
-                quantidade_transacoes -=1
-
-                data_transacao = datetime.now()
-                extrato.append(f"Deposito: R${deposito:0.2f}......Data:{data_transacao.strftime('%d/%m/%Y %H:%M')}")
-
-                print(f"Você acaba de depositar: R${deposito:0.2f}")
-                print(f"Seu saldo atual é: R${SALDO_CONTA:0.2F}")
-        except ValueError:
-            print("Por favor, digite um número válido!")
-
-        if quantidade_transacoes == 0:
-            quantidade_saques = 0
-
-        
-
-    elif opcao in ("e", "E"):
-        print("-------------Extrato-----------")
-        if not extrato:
-            print("Sem histórico disponível!")
-        else:
-            for e in extrato:
-                print(e)
-
-    elif opcao in ("f", "F"):
-        break
+                else:
+                    print("Operação inválida!")
 
     else:
-        print("Operação inválida!")
+        banco_usuario = cadastro_usuario(banco_usuario)
+        banco_usuario = cadastro_conta(banco_usuario, numero_conta)
+        numero_conta += 1
+        print(banco_usuario)
+        continue
+
+    sair = encerrar()
+
+    if sair == ("t" or "T"):
+        continue
+    else:
+        break
