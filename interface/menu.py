@@ -60,7 +60,7 @@ def listar_contas(banco_usuario):
     for cpf, dados_usuario in banco_usuario.items():
         nome = dados_usuario['Nome']
         print(
-f"""    Nome: {nome}             
+f"""    Nome: {nome}
     Agência: {dados_usuario['Conta']['Agência']}
     Conta: {dados_usuario['Conta']['Número da conta']}
 

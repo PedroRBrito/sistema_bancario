@@ -13,8 +13,18 @@ def cadastro_usuario(banco_usuario):
     bairro = input("Informe seu bairro: ").strip()
     cidade_estado = input("Informe a sua cidade e a sigla de seu estado (exemplo:Brasília/DF): ").strip()
 
-    banco_usuario[cpf] = {"Nome" : nome, "CPF" : cpf, "Conta" : {}, "Data de nascimento" : data_nascimento, "Endereço" : [logradouro, numero, bairro, cidade_estado]}
-
+    banco_usuario[cpf] = {
+        "Nome" : nome,
+        "CPF" : cpf,
+        "Conta" : {},
+        "Data de nascimento" : data_nascimento,
+        "Endereço" :
+            [
+                logradouro,
+                numero,
+                bairro,
+                cidade_estado]
+        }
 
     return banco_usuario
 
